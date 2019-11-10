@@ -1,6 +1,6 @@
 {
   "name": "egg-plugin-nuxt",
-  "version": "1.0.0",
+  "version": "0.1.1",
   "description": "",
   "eggPlugin": {
     "name": "nuxt"
@@ -35,12 +35,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/eggjs/egg-plugin-nuxt.git"
+    "url": "git+https://github.com/L-Chris/egg-plugin-nuxt.git"
   },
   "bugs": {
-    "url": "https://github.com/eggjs/egg/issues"
+    "url": "https://github.com/L-Chris/egg-plugin-nuxt/issues"
   },
-  "homepage": "https://github.com/eggjs/egg-plugin-nuxt#readme",
+  "homepage": "https://github.com/L-Chris/egg-plugin-nuxt#readme",
   "author": "L-Chris",
   "license": "MIT"
 }
