@@ -1,5 +1,5 @@
 module.exports = (options, app) => {
-  const routerPrefix = options.router.base;
+  const routerPrefix = options.default.router.base;
 
   return async (ctx, next) => {
     await next();
