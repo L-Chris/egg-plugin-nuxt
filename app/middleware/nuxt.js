@@ -1,5 +1,26 @@
 module.exports = (options, app) => {
-  const routerPrefix = options.default.router.base;
+  if (app.config.env === 'prod') {
+    return async (ctx, next) => {
+      await next();
+
+      if (ctx.status !== 404 || ctx.method !== 'GET') {
+        return
+      }
+
+      const ctxPath = ctx.path
+
+      if (/\.js$/.test(ctxPath)) {
+        ctx.set('Content-Type', 'application/javascript')
+      } else if (/\.css/.test(ctxPath)) {
+        ctx.set('Content-Type', 'text/css')
+      }
+
+      ctx.status = 200
+      ctx.respond = false
+      ctx.req.ctx = ctx
+      await app.nuxt.render(ctx.req, ctx.res)
+    }
+  }
 
   return async (ctx, next) => {
     await next();
@@ -8,13 +29,11 @@ module.exports = (options, app) => {
       return;
     }
 
-    const url = ctx.request.url
     const ctxPath = ctx.path
 
     if (/\.js$/.test(ctxPath)) {
       ctx.set('Content-Type', 'application/javascript')
-    }
-    if (/\.css/.test(ctxPath)) {
+    } else if (/\.css/.test(ctxPath)) {
       ctx.set('Content-Type', 'text/css')
     }
 
@@ -25,12 +44,10 @@ module.exports = (options, app) => {
       ctx.response.remove('Content-Length')
     }
 
-    if (url.startsWith(routerPrefix)) {
-      ctx.status = 200
-      ctx.respond = false
-      ctx.req.ctx = ctx
-      await ctx.app.nuxt.render(ctx.req, ctx.res)
-    }
+    ctx.status = 200
+    ctx.respond = false
+    ctx.req.ctx = ctx
+    await app.nuxt.render(ctx.req, ctx.res)
   }
 }
 
