@@ -5,7 +5,10 @@ module.exports = appInfo => {
 
   config.nuxt = {
     srcDir: path.join(appInfo.baseDir, './resources'),
-    rootDir: path.join(appInfo.baseDir)
+    rootDir: path.join(appInfo.baseDir),
+    router: {
+      base: '/'
+    }
   }
 
   return config
